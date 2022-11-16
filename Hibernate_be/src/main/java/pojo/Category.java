@@ -13,11 +13,11 @@ public class Category implements Serializable
     private String name;
     private String description;
 
-    public int getD() {
+    public int getId() {
         return id;
     }
 
-    public void setD(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
