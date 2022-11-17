@@ -31,15 +31,17 @@ public class Maintest {
 //
 //        list.forEach( c -> System.out.printf("%d - %s", c.getId(), c.getName()));
 
-        Product p = new Product();
-        p.setName("Xe máy trắng");
-        p.setPrice(new BigDecimal(1589000000));
-
-        Category c = session.get(Category.class,2);
-        p.setCategory(c);
-
-        session.save(p);
-
+//        Product p = new Product();
+//        p.setName("Xe máy trắng");
+//        p.setPrice(new BigDecimal(1589000000));
+//
+//        Category c = session.get(Category.class,2);
+//        p.setCategory(c);
+//
+//        session.save(p);
+        //thêm va get ko can transaction
+        Product p1= session.get(Product.class,4);
+        System.out.println(p1.getName());
 
         session.close();
     }

@@ -19,7 +19,7 @@ public class Product implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date createdDate;
     private boolean active;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
