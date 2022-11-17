@@ -15,9 +15,10 @@ public class Maintest {
 //        a.setDescription("giá đắt quá");
 //        session.save(a);
         Category b = session.get(Category.class,2); // trạng thái persistent
-        b.setDescription("giá rẻ bèo vậy");
+        //b.setDescription("giá rẻ bèo vậy");
         session.getTransaction().begin();
-        session.save(b);
+        //session.save(b);
+        session.delete(b);
         session.getTransaction().commit();
 
         session.close();
