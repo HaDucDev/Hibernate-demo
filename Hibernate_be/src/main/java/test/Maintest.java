@@ -10,10 +10,16 @@ public class Maintest {
 
         Session session= HibernateUtils.getFactory().openSession();
         // làm như OOP thôi
-        Category a= new Category();
-        a.setName("ô tô");
-        a.setDescription("giá đắt quá");
-        session.save(a);
+//        Category a= new Category(); // trạng thái transient
+//        a.setName("ô tô");
+//        a.setDescription("giá đắt quá");
+//        session.save(a);
+        Category b = session.get(Category.class,2); // trạng thái persistent
+        b.setDescription("giá rẻ bèo vậy");
+        session.getTransaction().begin();
+        session.save(b);
+        session.getTransaction().commit();
+
         session.close();
     }
 }
