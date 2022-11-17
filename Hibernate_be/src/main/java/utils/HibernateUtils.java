@@ -17,19 +17,18 @@ public  class HibernateUtils
 
     static {
         Configuration conf=new Configuration();
-        Properties props=new Properties();
+//        Properties props=new Properties();
+//        props.put(Environment.DIALECT,"org.hibernate.dialect.MySQLDialect");
+//        props.put(Environment.DRIVER,"com.mysql.cj.jdbc.Driver");
+//        props.put(Environment.URL,"jdbc:mysql://localhost:3306/demobe");
+//        props.put(Environment.USER,"root");
+//        props.put(Environment.PASS,"123456");
+//        //props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS,"thread");
+//       // props.put(Environment.HBM2DDL_AUTO,"update");
+//        props.put(Environment.SHOW_SQL,"true");// bật cái này để khi truy vấn bằng code java hibernate tựu sinh code sql cho ta xem ở cmd
+//        conf.setProperties(props);
 
-        props.put(Environment.DIALECT,"org.hibernate.dialect.MySQLDialect");
-        props.put(Environment.DRIVER,"com.mysql.cj.jdbc.Driver");
-        props.put(Environment.URL,"jdbc:mysql://localhost:3306/demobe");
-        props.put(Environment.USER,"root");
-        props.put(Environment.PASS,"123456");
-        //props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS,"thread");
-       // props.put(Environment.HBM2DDL_AUTO,"update");
-
-        props.put(Environment.SHOW_SQL,"true");// bật cái này để khi truy vấn bằng code java hibernate tựu sinh code sql cho ta xem ở cmd
-
-        conf.setProperties(props);
+        conf.configure("hibernate.cfg.xml");
         conf.addAnnotatedClass(Category.class);
 
         ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
