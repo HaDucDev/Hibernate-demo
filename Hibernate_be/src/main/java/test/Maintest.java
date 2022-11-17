@@ -40,8 +40,11 @@ public class Maintest {
 //
 //        session.save(p);
         //thêm va get ko can transaction
-        Product p1= session.get(Product.class,4);
-        System.out.println(p1.getName());
+//        Product p1= session.get(Product.class,4);
+//        System.out.println(p1.getName());
+
+        Category cate= session.get(Category.class,2);
+        cate.getProductList().forEach(p -> System.out.printf("%d - %s",p.getId(),p.getName()) );
 
         session.close();
     }

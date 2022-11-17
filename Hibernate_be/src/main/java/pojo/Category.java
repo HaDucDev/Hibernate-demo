@@ -1,8 +1,11 @@
 package pojo;
 
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
+//import java.util.List;
 @Entity
 @Table(name = "category")
 public class Category implements Serializable
@@ -12,6 +15,9 @@ public class Category implements Serializable
     private int id;
     private String name;
     private String description;
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+    private List<Product> productList;
 
     public int getId() {
         return id;
@@ -35,5 +41,13 @@ public class Category implements Serializable
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 }
