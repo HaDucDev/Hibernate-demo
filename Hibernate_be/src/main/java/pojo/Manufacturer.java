@@ -2,6 +2,7 @@ package pojo;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "manufacturer")
@@ -38,4 +39,5 @@ public class Manufacturer implements Serializable {
     public void setCountry(String country) {
         this.country = country;
     }
+
 }

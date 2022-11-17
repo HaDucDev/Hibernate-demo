@@ -24,6 +24,14 @@ public class Product implements Serializable {
     @JoinColumn(name = "category_id")
     private Category category;
 
+
+    @ManyToMany
+    @JoinTable(name = "pro_man",
+            joinColumns =  {@JoinColumn(name = "product_id ")},
+            inverseJoinColumns = {@JoinColumn(name = "manufacturer_id")}
+    )
+    private Set<Manufacturer> manufacturerSet;
+
     public int getId() {
         return id;
     }
@@ -88,4 +96,11 @@ public class Product implements Serializable {
         this.category = category;
     }
 
+    public Set<Manufacturer> getManufacturerSet() {
+        return manufacturerSet;
+    }
+
+    public void setManufacturerSet(Set<Manufacturer> manufacturerSet) {
+        this.manufacturerSet = manufacturerSet;
+    }
 }
