@@ -24,7 +24,7 @@ public class Maintest {
 //        session.delete(b);
 //        session.getTransaction().commit();
 
-       Query q = session.createQuery("FROM Category");// HQL
+       Query q = session.createQuery("FROM Category where id=2");// HQL
         List<Category> list= q.getResultList();
 
         list.forEach( c -> System.out.printf("%d - %s", c.getId(), c.getName()));
