@@ -163,30 +163,32 @@ public class Maintest {
 //        productList.forEach( a -> System.out.printf("%d - %s- %.2f\n",a.getId(),a.getName(),a.getPrice()));
 
 
-        // query revenue
-        CriteriaBuilder builder= session.getCriteriaBuilder();
-        CriteriaQuery<Object[]> query= builder.createQuery(Object[].class);
-        // mấy mấy bảng thì tạo mấy root. muốn joinn 2 bảng thì tạo 2 root
-        Root pRoot = query.from(Product.class);
-        Root cRoot = query.from(Category.class);
+//        // query revenue
+//        CriteriaBuilder builder= session.getCriteriaBuilder();
+//        CriteriaQuery<Object[]> query= builder.createQuery(Object[].class);
+//        // mấy mấy bảng thì tạo mấy root. muốn joinn 2 bảng thì tạo 2 root
+//        Root pRoot = query.from(Product.class);
+//        Root cRoot = query.from(Category.class);
+//
+//        query.where(builder.equal(pRoot.get("category"),cRoot.get("id")));// điều kiện join
+//        query =query.multiselect(cRoot.get("name").as(String.class),builder.count(pRoot.get("id").as(Integer.class)),
+//                builder.max(pRoot.get("price").as(BigDecimal.class)));// dêm bao nhiêu sp, giá max nhất
+//
+//        query =query.groupBy(cRoot.get("name").as(String.class));
+//        query = query.orderBy(builder.asc(cRoot.get("name").as(String.class)));
+//
+//
+//        Query q=session.createQuery(query);
+//        List<Object[]> list= q.getResultList();
+//        list.forEach(k -> {
+//            System.out.printf("%s - count: %d - max: %.2f\n",k[0],k[1],k[2] );
+//        });
 
-        query.where(builder.equal(pRoot.get("category"),cRoot.get("id")));// điều kiện join
-        query =query.multiselect(cRoot.get("name").as(String.class),builder.count(pRoot.get("id").as(Integer.class)),
-                builder.max(pRoot.get("price").as(BigDecimal.class)));// dêm bao nhiêu sp, giá max nhất
-
-        query =query.groupBy(cRoot.get("name").as(String.class));
-        query = query.orderBy(builder.asc(cRoot.get("name").as(String.class)));
-
-
-        Query q=session.createQuery(query);
+        //HQL: ít thuộc tính. ko cẩn thận có thể bị cast
+       Query q = session.createQuery("SELECT c.id, c.name,c.price FROM Product c");// HQL
         List<Object[]> list= q.getResultList();
-        list.forEach(k -> {
-            System.out.printf("%s - count: %d - max: %.2f\n",k[0],k[1],k[2] );
-        });
 
-
-
-
+        list.forEach( c -> System.out.printf("%d - count: %s - max: %.2f\n", c[0],c[1], c[2]));
 
 
         session.close();
