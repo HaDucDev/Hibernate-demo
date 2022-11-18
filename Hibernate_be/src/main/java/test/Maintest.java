@@ -120,28 +120,48 @@ public class Maintest {
 //        productList.forEach( a -> System.out.printf("%d - %s- %s\n",a.getId(),a.getName(),a.getPrice()));
 
 
-        // bettween
+//        // bettween
+//        CriteriaBuilder builder= session.getCriteriaBuilder();
+//        CriteriaQuery<Product> query= builder.createQuery(Product.class);
+//        // mấy mấy bảng thì tạo mấy root. muốn joinn 2 bảng thì tạo 2 root
+//        Root root = query.from(Product.class);
+//
+//        query =query.select(root); // lấy hết bảng
+//
+//
+//        Predicate p1=builder.greaterThanOrEqualTo(root.get("price").as(BigDecimal.class),new BigDecimal(1200000) );
+//        // lấy name trong đối tượng product là kiểu chuỗi
+//        Predicate p2=builder.lessThanOrEqualTo(root.get("price").as(BigDecimal.class),new BigDecimal(1200000000));
+//        query= query.where(builder.and(p1,p2));
+//
+////        // hoặc có thẻ thay
+////        Predicate p=builder.between(root.get("price").as(BigDecimal.class),new BigDecimal(1200000),new BigDecimal(1200000000));
+////        query= query.where(p);
+//
+//
+//        Query q=session.createQuery(query);
+//        List<Product> productList= q.getResultList();
+//        productList.forEach( a -> System.out.printf("%d - %s- %.2f\n",a.getId(),a.getName(),a.getPrice()));
+
+
+
+        // query revenue
         CriteriaBuilder builder= session.getCriteriaBuilder();
-        CriteriaQuery<Product> query= builder.createQuery(Product.class);
+        CriteriaQuery<Object[]> query= builder.createQuery(Object[].class);
         // mấy mấy bảng thì tạo mấy root. muốn joinn 2 bảng thì tạo 2 root
-        Root root = query.from(Product.class);
-
-        query =query.select(root); // lấy hết bảng
-
-
-        Predicate p1=builder.greaterThanOrEqualTo(root.get("price").as(BigDecimal.class),new BigDecimal(1200000) );
-        // lấy name trong đối tượng product là kiểu chuỗi
-        Predicate p2=builder.lessThanOrEqualTo(root.get("price").as(BigDecimal.class),new BigDecimal(1200000000));
-        query= query.where(builder.and(p1,p2));
-
-//        // hoặc có thẻ thay
-//        Predicate p=builder.between(root.get("price").as(BigDecimal.class),new BigDecimal(1200000),new BigDecimal(1200000000));
-//        query= query.where(p);
+        Root root = query.from(Product.class);// đây vẫn là produc vì truy ván vào product
+        query = query.multiselect(builder.count(root.get("id").as(Integer.class)),
+                builder.max(root.get("price").as(BigDecimal.class))); // lấy cong trả vê
 
 
         Query q=session.createQuery(query);
-        List<Product> productList= q.getResultList();
-        productList.forEach( a -> System.out.printf("%d - %s- %.2f\n",a.getId(),a.getName(),a.getPrice()));
+        Object[] kq= (Object[]) q.getSingleResult();
+        System.out.println("Count:" + kq[0]);
+        System.out.println("Max:" + kq[1]);
+
+//        List<Product> productList= q.getResultList();
+//        productList.forEach( a -> System.out.printf("%d - %s- %.2f\n",a.getId(),a.getName(),a.getPrice()));
+
 
 
 
