@@ -100,7 +100,7 @@ public class Maintest {
 //        productList.forEach( a -> System.out.printf("%d - %s- %s",a.getId(),a.getName(),a.getPrice()));
 
 
-         //criteria query api 123
+         //criteria query api like - or
         CriteriaBuilder builder= session.getCriteriaBuilder();
         CriteriaQuery<Product> query= builder.createQuery(Product.class);
         // mấy mấy bảng thì tạo mấy root. muốn joinn 2 bảng thì tạo 2 root
