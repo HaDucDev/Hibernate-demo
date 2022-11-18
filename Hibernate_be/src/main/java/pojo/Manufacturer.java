@@ -16,6 +16,9 @@ public class Manufacturer implements Serializable {
     private  String name;
     private String country;
 
+    @ManyToMany(mappedBy = "manufacturerSet")
+    private Set<Product> productSet;
+
     public int getId() {
         return id;
     }
@@ -40,4 +43,11 @@ public class Manufacturer implements Serializable {
         this.country = country;
     }
 
+    public Set<Product> getProductSet() {
+        return productSet;
+    }
+
+    public void setProductSet(Set<Product> productSet) {
+        this.productSet = productSet;
+    }
 }
