@@ -145,22 +145,44 @@ public class Maintest {
 
 
 
+//        // query revenue
+//        CriteriaBuilder builder= session.getCriteriaBuilder();
+//        CriteriaQuery<Object[]> query= builder.createQuery(Object[].class);
+//        // mấy mấy bảng thì tạo mấy root. muốn joinn 2 bảng thì tạo 2 root
+//        Root root = query.from(Product.class);// đây vẫn là produc vì truy ván vào product
+//        query = query.multiselect(builder.count(root.get("id").as(Integer.class)),
+//                builder.max(root.get("price").as(BigDecimal.class))); // lấy cong trả vê
+//
+//
+//        Query q=session.createQuery(query);
+//        Object[] kq= (Object[]) q.getSingleResult();// truy vấn ra 1 dòng
+//        System.out.println("Count:" + kq[0]);
+//        System.out.println("Max:" + kq[1]);
+
+//        List<Product> productList= q.getResultList();
+//        productList.forEach( a -> System.out.printf("%d - %s- %.2f\n",a.getId(),a.getName(),a.getPrice()));
+
+
         // query revenue
         CriteriaBuilder builder= session.getCriteriaBuilder();
         CriteriaQuery<Object[]> query= builder.createQuery(Object[].class);
         // mấy mấy bảng thì tạo mấy root. muốn joinn 2 bảng thì tạo 2 root
-        Root root = query.from(Product.class);// đây vẫn là produc vì truy ván vào product
-        query = query.multiselect(builder.count(root.get("id").as(Integer.class)),
-                builder.max(root.get("price").as(BigDecimal.class))); // lấy cong trả vê
+        Root pRoot = query.from(Product.class);
+        Root cRoot = query.from(Category.class);
+
+        query.where(builder.equal(pRoot.get("category"),cRoot.get("id")));// điều kiện join
+        query =query.multiselect(cRoot.get("name").as(String.class),builder.count(pRoot.get("id").as(Integer.class)),
+                builder.max(pRoot.get("price").as(BigDecimal.class)));// dêm bao nhiêu sp, giá max nhất
+
+        query =query.groupBy(cRoot.get("name").as(String.class));
+        query = query.orderBy(builder.asc(cRoot.get("name").as(String.class)));
 
 
         Query q=session.createQuery(query);
-        Object[] kq= (Object[]) q.getSingleResult();
-        System.out.println("Count:" + kq[0]);
-        System.out.println("Max:" + kq[1]);
-
-//        List<Product> productList= q.getResultList();
-//        productList.forEach( a -> System.out.printf("%d - %s- %.2f\n",a.getId(),a.getName(),a.getPrice()));
+        List<Object[]> list= q.getResultList();
+        list.forEach(k -> {
+            System.out.printf("%s - count: %d - max: %.2f\n",k[0],k[1],k[2] );
+        });
 
 
 
