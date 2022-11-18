@@ -198,7 +198,7 @@ public class Maintest {
 //        list.forEach( c -> System.out.printf("%d - count: %s - max: %.2f\n", c[0],c[1], c[2]));
 
 
-        Query q = session.createQuery("SELECT c.id, c.name,c.price FROM Product c where c.name like :kw");// HQL
+        Query q = session.createQuery("SELECT c.id, c.name,c.price FROM Product c where c.name like :kw order by c.id desc ");// HQL
 
         q.setParameter("kw","%xe_m%");
         List<Object[]> list= q.getResultList();
