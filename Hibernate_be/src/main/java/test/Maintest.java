@@ -8,6 +8,9 @@ import pojo.Product;
 import utils.HibernateUtils;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -77,8 +80,22 @@ public class Maintest {
 //        session.getTransaction().commit();;
 
 
-        Manufacturer m=session.get(Manufacturer.class,1);
-        m.getProductSet().forEach( a -> System.out.printf("%d - %s- %s",a.getId(),a.getName(),a.getPrice()));
+//        Manufacturer m=session.get(Manufacturer.class,1);
+//        m.getProductSet().forEach( a -> System.out.printf("%d - %s- %s",a.getId(),a.getName(),a.getPrice()));
+
+
+        // criteria query api
+        CriteriaBuilder builder= session.getCriteriaBuilder();
+        CriteriaQuery<Product> query= builder.createQuery(Product.class);
+        // mấy mấy bảng thì tạo mấy root. muốn joinn 2 bảng thì tạo 2 root
+        Root root = query.from(Product.class);
+
+        query =query.select(root); // lấy hết bảng
+
+
+        Query q=session.createQuery(query);// thành ra 4 dòng trên chỉ để xây dựng đối tượng truy vấn thôi.
+        List<Product> productList=q.getResultList();  //getSingleResult() lấy phần tử đầu tiên
+        productList.forEach( a -> System.out.printf("%d - %s- %s",a.getId(),a.getName(),a.getPrice()));
 
 
         session.close();
