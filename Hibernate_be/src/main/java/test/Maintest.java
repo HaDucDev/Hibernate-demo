@@ -101,6 +101,26 @@ public class Maintest {
 
 
          //criteria query api like - or
+//        CriteriaBuilder builder= session.getCriteriaBuilder();
+//        CriteriaQuery<Product> query= builder.createQuery(Product.class);
+//        // mấy mấy bảng thì tạo mấy root. muốn joinn 2 bảng thì tạo 2 root
+//        Root root = query.from(Product.class);
+//
+//        query =query.select(root); // lấy hết bảng
+//
+//
+//        Predicate p1=builder.like(root.get("name").as(String.class),"%xe_may%" );
+//                // lấy name trong đối tượng product là kiểu chuỗi
+//        Predicate p2=builder.like(root.get("name").as(String.class),"%xe_dap%");
+//
+//        query= query.where(builder.or(p1,p2));
+//
+//        Query q=session.createQuery(query);
+//        List<Product> productList= q.getResultList();
+//        productList.forEach( a -> System.out.printf("%d - %s- %s\n",a.getId(),a.getName(),a.getPrice()));
+
+
+        // bettween
         CriteriaBuilder builder= session.getCriteriaBuilder();
         CriteriaQuery<Product> query= builder.createQuery(Product.class);
         // mấy mấy bảng thì tạo mấy root. muốn joinn 2 bảng thì tạo 2 root
@@ -109,15 +129,20 @@ public class Maintest {
         query =query.select(root); // lấy hết bảng
 
 
-        Predicate p1=builder.like(root.get("name").as(String.class),"%xe_may%" );
-                // lấy name trong đối tượng product là kiểu chuỗi
-        Predicate p2=builder.like(root.get("name").as(String.class),"%xe_dap%");
+        Predicate p1=builder.greaterThanOrEqualTo(root.get("price").as(BigDecimal.class),new BigDecimal(1200000) );
+        // lấy name trong đối tượng product là kiểu chuỗi
+        Predicate p2=builder.lessThanOrEqualTo(root.get("price").as(BigDecimal.class),new BigDecimal(1200000000));
+        query= query.where(builder.and(p1,p2));
 
-        query= query.where(builder.or(p1,p2));
+//        // hoặc có thẻ thay
+//        Predicate p=builder.between(root.get("price").as(BigDecimal.class),new BigDecimal(1200000),new BigDecimal(1200000000));
+//        query= query.where(p);
+
 
         Query q=session.createQuery(query);
         List<Product> productList= q.getResultList();
-        productList.forEach( a -> System.out.printf("%d - %s- %s\n",a.getId(),a.getName(),a.getPrice()));
+        productList.forEach( a -> System.out.printf("%d - %s- %.2f\n",a.getId(),a.getName(),a.getPrice()));
+
 
 
 
