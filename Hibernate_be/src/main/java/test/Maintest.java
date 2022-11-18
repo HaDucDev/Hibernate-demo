@@ -184,8 +184,15 @@ public class Maintest {
 //            System.out.printf("%s - count: %d - max: %.2f\n",k[0],k[1],k[2] );
 //        });
 
-        //HQL: ít thuộc tính. ko cẩn thận có thể bị cast
-       Query q = session.createQuery("SELECT c.id, c.name,c.price FROM Product c");// HQL
+//        //HQL: ít thuộc tính. ko cẩn thận có thể bị cast
+//       Query q = session.createQuery("SELECT c.id, c.name,c.price FROM Product c");// HQL
+//        List<Object[]> list= q.getResultList();
+//
+//        list.forEach( c -> System.out.printf("%d - count: %s - max: %.2f\n", c[0],c[1], c[2]));
+
+
+        Query q = session.createQuery("SELECT c.id, c.name,c.price FROM Product c where c.id=:id");// HQL
+        q.setParameter("id",1);
         List<Object[]> list= q.getResultList();
 
         list.forEach( c -> System.out.printf("%d - count: %s - max: %.2f\n", c[0],c[1], c[2]));
