@@ -205,14 +205,25 @@ public class Maintest {
 //
 //        list.forEach( c -> System.out.printf("%d - count: %s - max: %.2f\n", c[0],c[1], c[2]));
 
-        Query q = session.createQuery("SELECT  c.name, count(p.id), max(p.price), min(p.price) FROM Product p inner join Category c " +
-                "on p.category.id=c.id group by c.name ");// HQL
-//        Query q = session.createQuery("SELECT  c.name, count(p.id), max(p.price), min(p.price) FROM Product p right outer join Category c " +
-//                "on p.category.id=c.id group by c.name ");
+//        Query q = session.createQuery("SELECT  c.name, count(p.id), max(p.price), min(p.price) FROM Product p inner join Category c " +
+//                "on p.category.id=c.id group by c.name ");// HQL
+////        Query q = session.createQuery("SELECT  c.name, count(p.id), max(p.price), min(p.price) FROM Product p right outer join Category c " +
+////                "on p.category.id=c.id group by c.name ");
+//
+//        List<Object[]> list= q.getResultList();
+//
+//        list.forEach( c -> System.out.printf("%s - count: %d - max: %.2f - min: %.2f\n", c[0],c[1], c[2], c[3]));
 
-        List<Object[]> list= q.getResultList();
+        //HQL update
+        Query q=session.createQuery("UPDATE Category p set p.name=:x where p.id=:y");
+        q.setParameter("x","xe siêu đắt");
+        q.setParameter("y",4);
 
-        list.forEach( c -> System.out.printf("%s - count: %d - max: %.2f - min: %.2f\n", c[0],c[1], c[2], c[3]));
+        session.getTransaction().begin();
+        q.executeUpdate();
+        session.getTransaction().commit();
+
+
         session.close();
     }
 }
