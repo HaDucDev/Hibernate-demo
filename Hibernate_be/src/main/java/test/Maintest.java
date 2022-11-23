@@ -22,10 +22,11 @@ public class Maintest {
 
         Session session= HibernateUtils.getFactory().openSession();
         // làm như OOP thôi
-//        Category a= new Category(); // trạng thái transient
-//        a.setName("ô tô");
-//        a.setDescription("giá đắt quá");
-//        session.save(a);
+        Category a= new Category(); // trạng thái transient
+        a.setName("ô tô");
+        a.setDescription("giá đắt quá");
+        session.save(a);
+        System.out.println( session.save(a));
 //        Category b = session.get(Category.class,2); // trạng thái persistent
 //        //b.setDescription("giá rẻ bèo vậy");
 //        session.getTransaction().begin();
@@ -214,16 +215,16 @@ public class Maintest {
 //
 //        list.forEach( c -> System.out.printf("%s - count: %d - max: %.2f - min: %.2f\n", c[0],c[1], c[2], c[3]));
 
-        //HQL update
-        Query q=session.createQuery("UPDATE Category p set p.name=:x where p.id=:y");
-        q.setParameter("x","xe siêu đắt");
-        q.setParameter("y",4);
-
-        session.getTransaction().begin();
-        q.executeUpdate();
-        session.getTransaction().commit();
-
-
-        session.close();
+//        //HQL update
+//        Query q=session.createQuery("UPDATE Category p set p.name=:x where p.id=:y");
+//        q.setParameter("x","xe siêu đắt");
+//        q.setParameter("y",4);
+//
+//        session.getTransaction().begin();
+//        q.executeUpdate();
+//        session.getTransaction().commit();
+//
+//
+//        session.close();
     }
 }
